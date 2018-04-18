@@ -1,2 +1,9 @@
 TODO
+====
+
 - change gs-wrapper-xxx to my application name
+
+Running the Application
+======
+
+./mvnw spring-boot:run
