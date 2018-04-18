@@ -1,11 +1,11 @@
-package hello;
+package com.dreamsmadevisible.connectedcities;
 
-public class Greeting {
+public class ConnectedCitiesResponse {
 
   private final long id;
   private final String content;
 
-  public Greeting(long id, String content) {
+  public ConnectedCitiesResponse(long id, String content) {
     this.id = id;
     this.content = content;
   }
