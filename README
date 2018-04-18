@@ -3,6 +3,12 @@ TODO
 
 - change gs-wrapper-xxx to my application name
 
+Introduction
+===
+
+I took the original skeleton from:
+https://github.com/spring-guides/gs-rest-service/
+
 Running the Application
 ======
 
