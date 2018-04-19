@@ -3,12 +3,15 @@ TODO
 
 - change gs-wrapper-xxx to my application name
 - Spring Boot Batch Job
+- change varchar in DB schema, or note it as a limitation
 
 Introduction
 ===
 
 I took the original skeleton from:
 https://github.com/spring-guides/gs-rest-service/
+Batch processing skeleton from:
+https://github.com/spring-guides/gs-batch-processing.git
 
 Running the Application
 ======
