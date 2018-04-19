@@ -35,28 +35,23 @@ public class BatchConfiguration {
 
     // tag::readerwriterprocessor[]
     @Bean
-    public FlatFileItemReader<Person> reader() {
-        return new FlatFileItemReaderBuilder<Person>()
+    public FlatFileItemReader<Road> reader() {
+        return new FlatFileItemReaderBuilder<Road>()
             .name("personItemReader")
             .resource(new ClassPathResource("sample-data.csv"))
             .delimited()
-            .names(new String[]{"firstName", "lastName"})
-            .fieldSetMapper(new BeanWrapperFieldSetMapper<Person>() {{
-                setTargetType(Person.class);
+            .names(new String[]{"city_a", "city_b"})
+            .fieldSetMapper(new BeanWrapperFieldSetMapper<Road>() {{
+                setTargetType(Road.class);
             }})
             .build();
     }
 
     @Bean
-    public PersonItemProcessor processor() {
-        return new PersonItemProcessor();
-    }
-
-    @Bean
-    public JdbcBatchItemWriter<Person> writer(DataSource dataSource) {
-        return new JdbcBatchItemWriterBuilder<Person>()
+    public JdbcBatchItemWriter<Road> writer(DataSource dataSource) {
+        return new JdbcBatchItemWriterBuilder<Road>()
             .itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>())
-            .sql("INSERT INTO people (first_name, last_name) VALUES (:firstName, :lastName)")
+            .sql("INSERT INTO roads (city_a, city_b) VALUES (:cityA, :cityB)")
             .dataSource(dataSource)
             .build();
     }
@@ -74,11 +69,12 @@ public class BatchConfiguration {
     }
 
     @Bean
-    public Step step1(JdbcBatchItemWriter<Person> writer) {
+    public Step step1(JdbcBatchItemWriter<Road> writer) {
         return stepBuilderFactory.get("step1")
-            .<Person, Person> chunk(10)
+            .<Road, Road> chunk(10)
             .reader(reader())
-            .processor(processor())
+            // TODO ItemProcessor?
+            // .processor(processor())
             .writer(writer)
             .build();
     }
