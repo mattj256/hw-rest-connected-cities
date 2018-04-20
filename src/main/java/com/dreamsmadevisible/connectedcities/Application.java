@@ -22,12 +22,32 @@ public class Application {
 
       cityRepository.deleteAll();
 
-      City newYork = new City("New York");
-      City boston = new City("Boston");
-
-      newYork.addNeighbor(boston);
-      cityRepository.save(newYork);
-      cityRepository.save(boston);
+      addNeighbor(cityRepository, "Boston", "New York");
+      addNeighbor(cityRepository, "Philadelphia", "Newark");
+      addNeighbor(cityRepository, "Newark", "Boston");
+      addNeighbor(cityRepository, "Trenton", "Albany");
     };
+  }
+
+  private static void addNeighbor(CityRepository cityRepository, String nameA, String nameB) {
+    City cityA = getCity(cityRepository, nameA, true);
+    City cityB = getCity(cityRepository, nameB, true);
+
+    cityA.addNeighbor(cityB);
+    // TODO: extra road created New York -> Boston
+    cityRepository.save(cityA);
+    cityRepository.save(cityB);
+  }
+
+  private static City getCity(CityRepository cityRepository, String name, boolean saveIfNew) {
+    City city = cityRepository.findByName(name);
+    /*
+    if (city == null) {
+      city = new City(name);
+      if (saveIfNew) cityRepository.save(city);
+    }
+    return city;
+    */
+    return city != null ? city : new City(name);
   }
 }

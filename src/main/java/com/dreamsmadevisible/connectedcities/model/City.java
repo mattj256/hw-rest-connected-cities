@@ -20,9 +20,9 @@ public class City {
   @Relationship(type="ROAD", direction = Relationship.UNDIRECTED)
   Set<City> neighbors = new HashSet<>();
 
-  // private City() {
-  //   // Empty constructor required as of Neo4j API 2.0.5
-  // };
+  private City() {
+    // Empty constructor required as of Neo4j API 2.0.5
+  };
 
   public City(String name) {
     this.name = name;
