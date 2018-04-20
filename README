@@ -4,6 +4,12 @@ TODO
 - change gs-wrapper-xxx to my application name
 - Spring Boot Batch Job
 - change varchar in DB schema, or note it as a limitation
+- Neo4j (graph database)
+
+Limitations
+===
+
+I'm storing the password in plaintext, which is a clear security risk (and a violation of the 12-Factor Application rules).
 
 Introduction
 ===
@@ -12,6 +18,19 @@ I took the original skeleton from:
 https://github.com/spring-guides/gs-rest-service/
 Batch processing skeleton from:
 https://github.com/spring-guides/gs-batch-processing.git
+
+Installation
+===
+
+Install Neo4j (graph database)
+Simple instructions:
+https://spring.io/guides/gs/accessing-data-neo4j/
+
+Comprehensive instructions:
+https://neo4j.com/docs/operations-manual/current/installation/
+
+Change the root password:
+curl -v -u neo4j:neo4j -X POST localhost:7474/user/neo4j/password -H "Content-type:application/json" -d "{\"password\":\"7Pj3FBEs6pma\"}"
 
 Running the Application
 ======
