@@ -58,8 +58,6 @@ public class ConnectedCitiesControllerTests {
   }
 
   @Test
-  // TODO
-  @Ignore
   public void cityConnectedToItself() throws Exception {
     // TODO
     // Known city is connected to itself
