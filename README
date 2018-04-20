@@ -4,6 +4,8 @@ TODO
 - change gs-wrapper-xxx to my application name
 - Spring Boot Batch Job
 - change varchar in DB schema, or note it as a limitation
+- error handling
+- unit tests
 
 Limitations
 ===
