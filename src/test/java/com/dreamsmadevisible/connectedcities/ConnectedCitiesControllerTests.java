@@ -57,6 +57,18 @@ public class ConnectedCitiesControllerTests {
     // TODO test URL encoding
   }
 
+  @Test
+  // TODO
+  @Ignore
+  public void cityConnectedToItself() throws Exception {
+    // TODO
+    // Known city is connected to itself
+    doTest("Newark", "Newark", true);
+
+    // Unknown city is not connected to itself
+    doTest("Montreal", "Montreal", false);
+  }
+
   private void doTest(String origin, String destination, boolean expectedResponse) throws Exception {
     doTest("/connected?origin=" + origin + "&destination=" + destination, expectedResponse);
   }

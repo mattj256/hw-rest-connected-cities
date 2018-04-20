@@ -10,14 +10,18 @@ import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @NodeEntity
 public class City {
 
+  private static final Logger log = LoggerFactory.getLogger(City.class);
+
   @Id @GeneratedValue Long id;
   private String name;
 
-  @Relationship(type="ROAD", direction = Relationship.UNDIRECTED)
+  @Relationship(type = "ROAD", direction = Relationship.UNDIRECTED)
   Set<City> neighbors = new HashSet<>();
 
   private City() {
@@ -26,6 +30,13 @@ public class City {
 
   public City(String name) {
     this.name = name;
+  }
+
+  // TODO: remove
+  public boolean hasNeighbor(City neighbor) {
+    // TODO: remove
+    // log.warn("hasNeighbor " + this + " " + neighbor + neighbors.contains(neighbor));
+    return neighbors.contains(neighbor);
   }
 
   public void addNeighbor(City neighbor) {
