@@ -4,12 +4,14 @@ TODO
 - change gs-wrapper-xxx to my application name
 - Spring Boot Batch Job
 - change varchar in DB schema, or note it as a limitation
-- Neo4j (graph database)
 
 Limitations
 ===
 
 I'm storing the password in plaintext, which is a clear security risk (and a violation of the 12-Factor Application rules).
+
+Room for optimization: unionFind, unionFind.queue, unionFind.forkJoin, etc.
+Writing algo.unionFind back to the database can be a significant up-front cost for large databases.
 
 Introduction
 ===
@@ -31,6 +33,9 @@ https://neo4j.com/docs/operations-manual/current/installation/
 
 Change the root password:
 curl -v -u neo4j:neo4j -X POST localhost:7474/user/neo4j/password -H "Content-type:application/json" -d "{\"password\":\"7Pj3FBEs6pma\"}"
+
+Install Neo4j graph algorithms plugin:
+https://github.com/neo4j-contrib/neo4j-graph-algorithms/releases
 
 Running the Application
 ======
