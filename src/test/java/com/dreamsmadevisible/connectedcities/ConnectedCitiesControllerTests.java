@@ -41,6 +41,23 @@ public class ConnectedCitiesControllerTests {
     doTest("/connected?origin=Boston&destination=Montreal", false);
   }
 
+  @Test
+  public void connectedCitiesShouldReturnTrue() throws Exception {
+    // directly connected
+    doTest("Newark", "Boston", true);
+    // roads go in both directions
+    doTest("Boston", "Newark", true);
+
+    // indirectly connected
+    doTest("Boston", "Philadelphia", true);
+
+    // TODO test URL encoding
+  }
+
+  private void doTest(String origin, String destination, boolean expectedResponse) throws Exception {
+    doTest("/connected?origin=" + origin + "&destination=" + destination, expectedResponse);
+  }
+
   private void doTest(String query, boolean expectedResponse) throws Exception {
     doTest(query, expectedResponse ? RESPONSE_YES : RESPONSE_NO);
   }
