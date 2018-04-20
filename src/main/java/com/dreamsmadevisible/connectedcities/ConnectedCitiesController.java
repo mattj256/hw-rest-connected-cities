@@ -18,7 +18,7 @@ public class ConnectedCitiesController {
   public ConnectedCitiesResponse greeting(
       @RequestParam(value="origin", defaultValue="") String origin,
       @RequestParam(value="destination", defaultValue="") String destination) {
-    return new ConnectedCitiesResponse("yes");
+    return new ConnectedCitiesResponse(RESPONSE_NO);
   }
 
   /*

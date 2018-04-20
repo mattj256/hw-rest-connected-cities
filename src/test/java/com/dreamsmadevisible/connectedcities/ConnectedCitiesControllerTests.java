@@ -24,17 +24,29 @@ public class ConnectedCitiesControllerTests {
   private MockMvc mockMvc;
 
   @Test
-  public void noParamGreetingShouldReturnDefaultMessage() throws Exception {
-    this.mockMvc.perform(get("/connected")).andDo(print()).andExpect(status().isOk())
-        .andExpect(jsonPath("$.response").value(RESPONSE_YES));
+  public void missingOrUnknownParamsShouldReturnFalse() throws Exception {
+    // missing origin and/or destination
+    doTest("/connected", false);
+    doTest("/connected?origin=", false);
+    doTest("/connected?origin=Boston", false);
+    doTest("/connected?destination=", false);
+    doTest("/connected?destination=Newark", false);
+    doTest("/connected?origin=Boston&destination=", false);
+    doTest("/connected?origin=&destination=Newark", false);
+
+    // unknown parameter
+    doTest("/connected?origin=Boston&foo=Montreal", false);
+
+    // unknown city
+    doTest("/connected?origin=Boston&destination=Montreal", false);
   }
 
-  /*
-  @Test
-  public void paramGreetingShouldReturnTailoredMessage() throws Exception {
-    this.mockMvc.perform(get("/greeting").param("name", "Spring Community"))
-        .andDo(print()).andExpect(status().isOk())
-        .andExpect(jsonPath("$.content").value("Hello, Spring Community!"));
+  private void doTest(String query, boolean expectedResponse) throws Exception {
+    doTest(query, expectedResponse ? RESPONSE_YES : RESPONSE_NO);
   }
-  */
+
+  private void doTest(String query, String expectedResponse) throws Exception {
+    mockMvc.perform(get(query)).andDo(print()).andExpect(status().isOk())
+        .andExpect(jsonPath("$.response").value(expectedResponse));
+  }
 }
