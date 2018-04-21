@@ -22,6 +22,9 @@ public class ConnectedCitiesController {
   public ConnectedCitiesResponse greeting(
       @RequestParam(value="origin", defaultValue="") String origin,
       @RequestParam(value="destination", defaultValue="") String destination) {
+    if (origin != null) origin = origin.trim();
+    if (destination != null) destination = destination.trim();
+
     if (isNullOrEmpty(origin) || isNullOrEmpty(destination)) return getResponse(false);
 
     City cityA = cityRepository.findByName(origin);

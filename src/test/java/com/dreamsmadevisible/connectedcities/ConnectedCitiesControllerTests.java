@@ -70,6 +70,13 @@ public class ConnectedCitiesControllerTests {
   }
 
   @Test
+  public void testWhitespace() throws Exception {
+    doTest("Newark", " Boston", true);
+    doTest("Newark", "Boston ", true);
+    doTest("Newark", " Boston ", true);
+  }
+
+  @Test
   public void testUrlEncoding() throws Exception {
     doTest("Boston", "New York", true);
   }
