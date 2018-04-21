@@ -71,12 +71,11 @@ public class ConnectedCitiesControllerTests {
 
   @Test
   public void testUrlEncoding() throws Exception {
-    doTest("Boston", "New%20York", false);
+    doTest("Boston", "New York", true);
   }
 
   @Test
   public void cityConnectedToItself() throws Exception {
-    // TODO
     // Known city is connected to itself
     doTest("Newark", "Newark", true);
 
