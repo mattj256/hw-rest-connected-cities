@@ -72,3 +72,31 @@ If I had more time:
 - better error handling. (For example, if a line in city.txt has multiple commas or is missing source or destination city)
 - investigate the difference between unionFind, unionFind.queue, unionFind.forkJoin, etc.
 - optimization and load testing
+
+Appendix: Useful Cypher Queries
+===
+
+Delete everything in the database:
+
+MATCH (n)
+DETACH DELETE n
+
+Return a node matching the given name, create it if necessary:
+
+MERGE (x:City { name: 'New York'}) RETURN x
+
+List up to 50 cities in the db:
+
+MATCH (n:City) RETURN n LIMIT 50
+
+Create two cities and one road, but don't create any duplicates.
+
+MERGE (cityA:City { name: 'Boston'})
+MERGE (cityB:City { name: 'New York'})
+MERGE (cityA)-[:ROAD]->(cityB)
+
+Boolean function: are two cities connected?
+
+MATCH (cityA:City) WHERE cityA.name='New York'
+MATCH (cityB:City) WHERE cityB.name='Boston'
+RETURN cityA.partition = cityB.partition
