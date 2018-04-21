@@ -27,6 +27,8 @@ public class Application {
       CityRepositoryUtils.addNeighbor(cityRepository, "Philadelphia", "Newark");
       CityRepositoryUtils.addNeighbor(cityRepository, "Newark", "Boston");
       CityRepositoryUtils.addNeighbor(cityRepository, "Trenton", "Albany");
+
+      cityRepository.writePartitionIndices();
     };
   }
 }
