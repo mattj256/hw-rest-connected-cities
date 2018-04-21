@@ -36,10 +36,18 @@ public class ConnectedCitiesControllerTests {
     doTest("/connected?origin=&destination=Newark", false);
 
     // unknown parameter
-    doTest("/connected?origin=Boston&foo=Montreal", false);
+    doTest("/connected?origin=Boston&foo=Newark", false);
+  }
 
-    // unknown city
+  @Test
+  public void unknownCityShouldReturnFalse() throws Exception {
     doTest("/connected?origin=Boston&destination=Montreal", false);
+  }
+
+  @Test
+  public void extraUnknownParamShouldBeIgnored() throws Exception {
+    doTest("/connected?origin=Boston&destination=Newark&foo=Philadelphia", true);
+    doTest("/connected?origin=Boston&destination=Trenton&foo=Philadelphia", false);
   }
 
   @Test
