@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class ConnectedCitiesController {
   private static final Logger log = LoggerFactory.getLogger(ConnectedCitiesController.class);
 
-  // TODO: move this into an external configuration file
   private static final String RESPONSE_YES = "yes";
   private static final String RESPONSE_NO = "no";
   @Autowired CityRepository cityRepository;

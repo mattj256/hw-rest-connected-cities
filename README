@@ -68,6 +68,7 @@ Varchar(20) will truncate long city names.
 If I had more time:
 - hook up Spring Boot to the Neo4j database.
 - normalize the city names. (Remove leading and trailing space and make case-insensitive.)
+- "yes" and "no" strings should be environment variables, not in the source code.
 - better error handling. (For example, if a line in city.txt has multiple commas or is missing source or destination city)
 - investigate the difference between unionFind, unionFind.queue, unionFind.forkJoin, etc.
 - optimization and load testing

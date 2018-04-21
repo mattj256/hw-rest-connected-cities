@@ -83,6 +83,9 @@ public class ConnectedCitiesControllerTests {
     doTest("Montreal", "Montreal", false);
   }
 
+  /////
+  // Helper methods
+
   private void doTest(String origin, String destination, boolean expectedResponse) throws Exception {
     doTest("/connected?origin=" + origin + "&destination=" + destination, expectedResponse);
   }
