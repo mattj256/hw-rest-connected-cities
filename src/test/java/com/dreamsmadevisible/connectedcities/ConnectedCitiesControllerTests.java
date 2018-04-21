@@ -58,6 +58,11 @@ public class ConnectedCitiesControllerTests {
   }
 
   @Test
+  public void disconnectedCitiesShouldReturnFalse() throws Exception {
+    doTest("Philadelphia", "Albany", false);
+  }
+
+  @Test
   public void cityConnectedToItself() throws Exception {
     // TODO
     // Known city is connected to itself
