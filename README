@@ -53,6 +53,8 @@ I write the cities to the database during startup, then use the Neo4j graph algo
 
 When the origin is the same as the destination, I decided to return "yes" if it is a known city and "no" if it's an unknown city.  This was an arbitrary decision and in the real world I would ask how this case should be handled (or be prepared to change it).
 
+I made the API return JSON rather than just "yes" and "no", because JSON allows more flexibility to add additional information to the response in the future without forcing current API users to rewrite their code.
+
 Limitations
 ===
 
