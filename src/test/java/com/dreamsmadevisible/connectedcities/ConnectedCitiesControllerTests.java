@@ -50,8 +50,6 @@ public class ConnectedCitiesControllerTests {
   }
 
   @Test
-  // TODO
-  @Ignore
   public void indirectlyConnectedCitiesShouldReturnTrue() throws Exception {
     doTest("Boston", "Philadelphia", true);
     // roads go in both directions

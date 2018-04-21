@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
@@ -20,6 +19,7 @@ public class City {
 
   @Id @GeneratedValue Long id;
   private String name;
+  private Integer partition;
 
   @Relationship(type = "ROAD", direction = Relationship.UNDIRECTED)
   Set<City> neighbors = new HashSet<>();
@@ -32,11 +32,17 @@ public class City {
     this.name = name;
   }
 
+  /*
   // TODO: remove
   public boolean hasNeighbor(City neighbor) {
     // TODO: remove
     // log.warn("hasNeighbor " + this + " " + neighbor + neighbors.contains(neighbor));
     return neighbors.contains(neighbor);
+  }
+  */
+
+  public boolean isConnected(City neighbor) {
+    return this.partition != null && this.partition.equals(neighbor.partition);
   }
 
   public void addNeighbor(City neighbor) {
@@ -50,6 +56,8 @@ public class City {
   public void setName(String name) {
     this.name = name;
   }
+
+  public Integer getPartition() { return partition; }
 
   @Override
   public String toString() {

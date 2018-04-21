@@ -7,6 +7,11 @@ TODO
 - error handling
 - unit tests
 
+Design Decisions
+===
+
+When the origin is the same as the destination, I decided to return "yes" if it is a known city and "no" if it's an unknown city.  This was an arbitrary decision and in the real world I would ask this case should be handled (or be prepared to change it).
+
 Limitations
 ===
 
@@ -43,3 +48,8 @@ Running the Application
 ======
 
 ./mvnw spring-boot:run
+
+Running the Unit Tests
+======
+
+./mvnw test

@@ -19,9 +19,6 @@ public class ConnectedCitiesController {
   private static final String RESPONSE_NO = "no";
   @Autowired CityRepository cityRepository;
 
-  // private static final String template = "Hello, %s!";
-  // private final AtomicLong counter = new AtomicLong();
-
   @RequestMapping("/connected")
   public ConnectedCitiesResponse greeting(
       @RequestParam(value="origin", defaultValue="") String origin,
@@ -31,14 +28,18 @@ public class ConnectedCitiesController {
     City cityA = cityRepository.findByName(origin);
     City cityB = cityRepository.findByName(destination);
     if (cityA == null || cityB == null) return getResponse(false);
-    if (cityA.getName().equals(cityB.getName())) return getResponse(true);
 
-    // TODO handle indirect connections
-    if (cityA.hasNeighbor(cityB) || cityB.hasNeighbor(cityA)) return getResponse(true);
+    boolean connected = cityA.isConnected(cityB);
+    return getResponse(connected);
 
-    // return getResponse(areConnected(cityA, cityB));
+    // if (cityA.getName().equals(cityB.getName())) return getResponse(true);
 
-    return getResponse(false);
+    // // TODO handle indirect connections
+    // if (cityA.hasNeighbor(cityB) || cityB.hasNeighbor(cityA)) return getResponse(true);
+
+    // // return getResponse(areConnected(cityA, cityB));
+
+    // return getResponse(false);
   }
 
   private static ConnectedCitiesResponse getResponse(boolean response) {
