@@ -32,15 +32,6 @@ public class City {
     this.name = name;
   }
 
-  /*
-  // TODO: remove
-  public boolean hasNeighbor(City neighbor) {
-    // TODO: remove
-    // log.warn("hasNeighbor " + this + " " + neighbor + neighbors.contains(neighbor));
-    return neighbors.contains(neighbor);
-  }
-  */
-
   public boolean isConnected(City neighbor) {
     return this.partition != null && this.partition.equals(neighbor.partition);
   }

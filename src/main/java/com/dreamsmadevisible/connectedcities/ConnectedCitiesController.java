@@ -27,19 +27,13 @@ public class ConnectedCitiesController {
     // TODO normalize: remove leading and trailing spaces, squash internal spaces, make all caps
     City cityA = cityRepository.findByName(origin);
     City cityB = cityRepository.findByName(destination);
-    if (cityA == null || cityB == null) return getResponse(false);
+    if (cityA == null || cityB == null) {
+      // At least one city is not in the db
+      return getResponse(false);
+    }
 
     boolean connected = cityA.isConnected(cityB);
     return getResponse(connected);
-
-    // if (cityA.getName().equals(cityB.getName())) return getResponse(true);
-
-    // // TODO handle indirect connections
-    // if (cityA.hasNeighbor(cityB) || cityB.hasNeighbor(cityA)) return getResponse(true);
-
-    // // return getResponse(areConnected(cityA, cityB));
-
-    // return getResponse(false);
   }
 
   private static ConnectedCitiesResponse getResponse(boolean response) {
