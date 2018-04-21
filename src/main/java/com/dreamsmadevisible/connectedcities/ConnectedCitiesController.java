@@ -41,13 +41,6 @@ public class ConnectedCitiesController {
     return getResponse(false);
   }
 
-  /*
-  @RequestMapping("/greeting2")
-  public ConnectedCitiesResponse greeting(@RequestParam(value="name", defaultValue="World") String name) {
-    return new ConnectedCitiesResponse(counter.incrementAndGet(), String.format(template, name));
-  }
-  */
-
   private static ConnectedCitiesResponse getResponse(boolean response) {
     return new ConnectedCitiesResponse(response ? RESPONSE_YES : RESPONSE_NO);
   }

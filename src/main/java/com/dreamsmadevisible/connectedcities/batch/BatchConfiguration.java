@@ -27,56 +27,50 @@ import org.springframework.jdbc.core.JdbcTemplate;
 @EnableBatchProcessing
 public class BatchConfiguration {
 
-    @Autowired
-    public JobBuilderFactory jobBuilderFactory;
+  @Autowired
+  public JobBuilderFactory jobBuilderFactory;
 
-    @Autowired
-    public StepBuilderFactory stepBuilderFactory;
+  @Autowired
+  public StepBuilderFactory stepBuilderFactory;
 
-    // tag::readerwriterprocessor[]
-    @Bean
-    public FlatFileItemReader<Road> reader() {
-        return new FlatFileItemReaderBuilder<Road>()
-            .name("personItemReader")
-            .resource(new ClassPathResource("sample-data.csv"))
-            .delimited()
-            .names(new String[]{"city_a", "city_b"})
-            .fieldSetMapper(new BeanWrapperFieldSetMapper<Road>() {{
-                setTargetType(Road.class);
-            }})
-            .build();
-    }
+  @Bean
+  public FlatFileItemReader<Road> reader() {
+    return new FlatFileItemReaderBuilder<Road>()
+        .name("personItemReader")
+        .resource(new ClassPathResource("sample-data.csv"))
+        .delimited()
+        .names(new String[]{"city_a", "city_b"})
+        .fieldSetMapper(new BeanWrapperFieldSetMapper<Road>() {{
+            setTargetType(Road.class);
+        }})
+        .build();
+  }
 
-    @Bean
-    public JdbcBatchItemWriter<Road> writer(DataSource dataSource) {
-        return new JdbcBatchItemWriterBuilder<Road>()
-            .itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>())
-            .sql("INSERT INTO roads (city_a, city_b) VALUES (:cityA, :cityB)")
-            .dataSource(dataSource)
-            .build();
-    }
-    // end::readerwriterprocessor[]
+  @Bean
+  public JdbcBatchItemWriter<Road> writer(DataSource dataSource) {
+    return new JdbcBatchItemWriterBuilder<Road>()
+        .itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>())
+        .sql("INSERT INTO roads (city_a, city_b) VALUES (:cityA, :cityB)")
+        .dataSource(dataSource)
+        .build();
+  }
 
-    // tag::jobstep[]
-    @Bean
-    public Job importUserJob(JobCompletionNotificationListener listener, Step step1) {
-        return jobBuilderFactory.get("importUserJob")
-            .incrementer(new RunIdIncrementer())
-            .listener(listener)
-            .flow(step1)
-            .end()
-            .build();
-    }
+  @Bean
+  public Job importUserJob(JobCompletionNotificationListener listener, Step step1) {
+    return jobBuilderFactory.get("importUserJob")
+        .incrementer(new RunIdIncrementer())
+        .listener(listener)
+        .flow(step1)
+        .end()
+        .build();
+  }
 
-    @Bean
-    public Step step1(JdbcBatchItemWriter<Road> writer) {
-        return stepBuilderFactory.get("step1")
-            .<Road, Road> chunk(10)
-            .reader(reader())
-            // TODO ItemProcessor?
-            // .processor(processor())
-            .writer(writer)
-            .build();
-    }
-    // end::jobstep[]
+  @Bean
+  public Step step1(JdbcBatchItemWriter<Road> writer) {
+    return stepBuilderFactory.get("step1")
+        .<Road, Road> chunk(10)
+        .reader(reader())
+        .writer(writer)
+        .build();
+  }
 }
