@@ -43,23 +43,29 @@ public class ConnectedCitiesControllerTests {
   }
 
   @Test
-  // TODO
-  @Ignore
-  public void connectedCitiesShouldReturnTrue() throws Exception {
-    // directly connected
+  public void directlyConnectedCitiesShouldReturnTrue() throws Exception {
     doTest("Newark", "Boston", true);
     // roads go in both directions
     doTest("Boston", "Newark", true);
+  }
 
-    // indirectly connected
+  @Test
+  // TODO
+  @Ignore
+  public void indirectlyConnectedCitiesShouldReturnTrue() throws Exception {
     doTest("Boston", "Philadelphia", true);
-
-    // TODO test URL encoding
+    // roads go in both directions
+    doTest("Philadelphia", "Boston", true);
   }
 
   @Test
   public void disconnectedCitiesShouldReturnFalse() throws Exception {
     doTest("Philadelphia", "Albany", false);
+  }
+
+  @Test
+  public void testUrlEncoding() throws Exception {
+    doTest("Boston", "New%20York", false);
   }
 
   @Test
