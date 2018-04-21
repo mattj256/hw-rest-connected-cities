@@ -9,7 +9,6 @@ public class CityRepositoryUtils {
     City cityB = getCity(cityRepository, nameB);
 
     cityA.addNeighbor(cityB);
-    // TODO: extra road created New York -> Boston
     cityRepository.save(cityA);
     cityRepository.save(cityB);
   }

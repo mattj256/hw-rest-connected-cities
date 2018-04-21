@@ -1,27 +1,14 @@
-TODO
-====
-
-- change gs-wrapper-xxx to my application name
-- Spring Boot Batch Job
-- change varchar in DB schema, or note it as a limitation
-- error handling
-- unit tests
-
-Design Decisions
-===
-
-When the origin is the same as the destination, I decided to return "yes" if it is a known city and "no" if it's an unknown city.  This was an arbitrary decision and in the real world I would ask this case should be handled (or be prepared to change it).
-
-Limitations
-===
-
-I'm storing the password in plaintext, which is a clear security risk (and a violation of the 12-Factor Application rules).
-
-Room for optimization: unionFind, unionFind.queue, unionFind.forkJoin, etc.
-Writing algo.unionFind back to the database can be a significant up-front cost for large databases.
-
 Introduction
 ===
+
+This is a RESTful service which queries a graph database to determine whether two cities are connected
+by roads.
+
+First I use Spring Batch to load the graph information into an in-memory SQL database.
+Then I load hard-coded cities into an external Neo4j graph database.
+Finally, the RESTful API queries the graph database.
+
+(I wasn't able to get Spring Batch to connect to the graph database.)
 
 I took the original skeleton from:
 https://github.com/spring-guides/gs-rest-service/
@@ -53,3 +40,32 @@ Running the Unit Tests
 ======
 
 ./mvnw test
+
+Design Decisions
+===
+
+I chose a graph database because it seemed like the best fit for this use case.
+I would consider using SQL or NoSQL here:
+- if we were confident the data set was going to remain small for a long time.
+- if reads are much more common than writes, because caching can be used and the database might not be a bottleneck.
+
+I write the cities to the database during startup, then use the Neo4j graph algorithms plugin to precompute each city's graph component.  This assumes that the connections between cities will never change, or that we're ok with answering queries with stale data.  It also assumes that the number of cities is comparatively small.  Twelve Factor apps should start within two or three seconds, so we shouldn't be doing any extensive initialization before we're ready to answer requests.  An alternative design would be to compute the city's graph component as each request comes in.  This puts a small amount of load on the database with each request rather than a large amount up front.  (If this alternate approach is used, caching should be investigated because it could make a big difference in performance and scalability.)
+
+When the origin is the same as the destination, I decided to return "yes" if it is a known city and "no" if it's an unknown city.  This was an arbitrary decision and in the real world I would ask how this case should be handled (or be prepared to change it).
+
+Limitations
+===
+
+I'm storing the password in plaintext, which is a security risk and a violation of the 12-Factor Application rules.
+
+Writing algo.unionFind back to the database can be a significant up-front cost for large databases.
+This also assumes that the connections between cities will never change, or that it's ok to answer queries based on stale data.
+
+Varchar(20) will truncate long city names.
+
+If I had more time:
+- hook up Spring Boot to the Neo4j database.
+- normalize the city names. (Remove leading and trailing space and make case-insensitive.)
+- better error handling. (For example, if a line in city.txt has multiple commas or is missing source or destination city)
+- investigate the difference between unionFind, unionFind.queue, unionFind.forkJoin, etc.
+- optimization and load testing

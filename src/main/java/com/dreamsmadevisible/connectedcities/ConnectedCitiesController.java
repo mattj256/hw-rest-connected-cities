@@ -24,9 +24,10 @@ public class ConnectedCitiesController {
       @RequestParam(value="origin", defaultValue="") String origin,
       @RequestParam(value="destination", defaultValue="") String destination) {
     if (isNullOrEmpty(origin) || isNullOrEmpty(destination)) return getResponse(false);
-    // TODO normalize: remove leading and trailing spaces, squash internal spaces, make all caps
+
     City cityA = cityRepository.findByName(origin);
     City cityB = cityRepository.findByName(destination);
+
     if (cityA == null || cityB == null) {
       // At least one city is not in the db
       return getResponse(false);
